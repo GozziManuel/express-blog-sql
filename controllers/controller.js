@@ -1,6 +1,18 @@
+const connection = require("../data/db");
+
 function home(req, res) {
-  res.json({
-    success: true,
+  const sql = "SELECT * FROM posts";
+  connection.query(sql, (err, results) => {
+    if (err)
+      return res.status(500).json({
+        success: false,
+        message: "Database query failed",
+      });
+    res.json({
+      success: true,
+      message: "Ecco a voi i posts",
+      results: results,
+    });
   });
 }
 
