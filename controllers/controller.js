@@ -61,8 +61,19 @@ function modify(req, res) {
 }
 
 function destroy(req, res) {
-  res.json({
-    description: `you are eliminating post number 1`,
+  // recuperiamo l'id dall' URL
+  const { id } = req.params;
+  const sql = "DELETE FROM posts WHERE id = ?";
+  //Eliminiamo la pizza dal menu
+  connection.query(sql, [id], (err) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ success: false, message: "Failed to delete pizza" });
+    }
+    res.json({
+      description: `you are eliminating post number ${id}`,
+    });
   });
 }
 
